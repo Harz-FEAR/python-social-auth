@@ -1,3 +1,5 @@
+import warnings
+
 from functools import wraps
 
 from pyramid.threadlocal import get_current_registry
@@ -19,8 +21,12 @@ def get_helper(name):
     return settings.get(setting_name(name), DEFAULTS.get(name, None))
 
 
-def load_strategy():
-    return get_strategy(get_helper('STRATEGY'), get_helper('STORAGE'))
+def load_strategy(request):
+    return get_strategy(
+        get_helper('STRATEGY'),
+        get_helper('STORAGE'),
+        request
+    )
 
 
 def load_backend(strategy, name, redirect_uri):
@@ -41,7 +47,7 @@ def psa(redirect_uri=None):
             if uri and not uri.startswith('/'):
                 uri = request.route_url(uri, backend=backend)
 
-            request.strategy = load_strategy()
+            request.strategy = load_strategy(request)
             request.backend = load_backend(request.strategy, backend, uri)
             return func(request, *args, **kwargs)
         return wrapper
@@ -69,3 +75,8 @@ def backends(request, user):
             user, get_helper('AUTHENTICATION_BACKENDS'), storage
         )
     }
+
+
+def strategy(*args, **kwargs):
+    warnings.warn('@strategy decorator is deprecated, use @psa instead')
+    return psa(*args, **kwargs)

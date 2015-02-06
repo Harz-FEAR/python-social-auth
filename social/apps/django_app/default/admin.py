@@ -9,7 +9,7 @@ from social.apps.django_app.default.models import UserSocialAuth, Nonce, \
 
 class UserSocialAuthOption(admin.ModelAdmin):
     """Social Auth user options"""
-    list_display = ('id', 'user', 'provider', 'uid')
+    list_display = ('user', 'id', 'provider', 'uid')
     list_filter = ('provider',)
     raw_id_fields = ('user',)
     list_select_related = True
@@ -27,7 +27,7 @@ class UserSocialAuthOption(admin.ModelAdmin):
             all_names = _User._meta.get_all_field_names()
             search_fields = [name for name in fieldnames
                                 if name and name in all_names]
-        return ['user_' + name for name in search_fields]
+        return ['user__' + name for name in search_fields]
 
 
 class NonceOption(admin.ModelAdmin):

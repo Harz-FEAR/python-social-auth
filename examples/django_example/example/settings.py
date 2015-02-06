@@ -134,6 +134,7 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.disqus.DisqusOAuth2',
     'social.backends.douban.DoubanOAuth2',
     'social.backends.dropbox.DropboxOAuth',
+    'social.backends.dropbox.DropboxOAuth2',
     'social.backends.evernote.EvernoteSandboxOAuth',
     'social.backends.facebook.FacebookAppOAuth2',
     'social.backends.facebook.FacebookOAuth2',
@@ -156,11 +157,12 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.mailru.MailruOAuth2',
     'social.backends.mendeley.MendeleyOAuth',
     'social.backends.mendeley.MendeleyOAuth2',
+    'social.backends.mineid.MineIDOAuth2',
     'social.backends.mixcloud.MixcloudOAuth2',
+    'social.backends.nationbuilder.NationBuilderOAuth2',
     'social.backends.odnoklassniki.OdnoklassnikiOAuth2',
     'social.backends.open_id.OpenIdAuth',
     'social.backends.openstreetmap.OpenStreetMapOAuth',
-    'social.backends.orkut.OrkutOAuth',
     'social.backends.persona.PersonaAuth',
     'social.backends.podio.PodioOAuth2',
     'social.backends.rdio.RdioOAuth1',
@@ -191,6 +193,7 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.yandex.YandexOAuth2',
     'social.backends.vimeo.VimeoOAuth1',
     'social.backends.lastfm.LastFmAuth',
+    'social.backends.moves.MovesOAuth2',
     'social.backends.email.EmailAuth',
     'social.backends.username.UsernameAuth',
     'django.contrib.auth.backends.ModelBackend',
@@ -224,10 +227,13 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.mail.mail_validation',
     'social.pipeline.user.create_user',
     'social.pipeline.social_auth.associate_user',
+    'social.pipeline.debug.debug',
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details',
-    #'social.pipeline.debug.debug'
+    'social.pipeline.debug.debug'
 )
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['first_name', 'last_name', 'email',
 #                                         'username']
